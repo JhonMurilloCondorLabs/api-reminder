@@ -100,6 +100,8 @@ api.post('/save', async (req, res, next) => {
             res.status(500).send({ errors: err });
             return next()
           }
+          console.log(JSON.parse(httpResponse.body))
+          console.log(httpResponse.body)
           if (JSON.parse(httpResponse.body).error === 'already_invited') {
             res.status(400).send({ info: 'Invitation was send check email' });
             return next()
