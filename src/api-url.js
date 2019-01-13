@@ -13,10 +13,11 @@ const Slack = require('slack-node');
 const request = require('request');
 
 const api = asyncify(express.Router())
-const tokenClient = process.env.TOKEN_SLACK_CLIENT;
+//const tokenClient = process.env.TOKEN_SLACK_CLIENT;
+const tokenClient = "xoxp-523503548023-521845738785-522504373828-95e884ccbf2d5c9523ea735d91255eea";
 
-
-const tokenBot = process.env.TOKEN_SLACK_BOT;
+//const tokenBot = process.env.TOKEN_SLACK_BOT;
+const tokenBot = "xoxb-523503548023-522302167060-urxnLEMUaywfEnQrFt6NKVVo";
 api.get('/', (req, res, next) => {
   debug(`Request successful, ${chalk.green('Endpoint Worked!')}`)
   res.send('Endpoint Worked!')
@@ -101,20 +102,15 @@ api.post('/save', async (req, res, next) => {
             res.status(500).send({ errors: err });
             return next()
           }
-          res.status(200).send({ info: 'Email no found in Slack, Invitation Send' });
-          return next()
-        });
+          if (JSON.parse(httpResponse.body).error === 'already_invited') {
+            res.status(400).send({ info: 'Invitation was send check email' });
+            return next()
+          } else {
+            res.status(200).send({ info: 'Email no found in ReminderApp Slack, Invitation Send please check the email' });
+            return next()
+          }
 
-        /* slackInvite({
-           email, // set your email to invite here
-           token: tokenClient, // set your token here
-           team: 'reminderapp-workspace'
-         }, function (err, response) {
-           if (err) {
-             res.status(500).send({ errors: err });
-             return next()
-           }
-         });*/
+        });
       }
     });
 
