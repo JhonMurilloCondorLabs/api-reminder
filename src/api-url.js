@@ -13,11 +13,9 @@ const Slack = require('slack-node');
 const request = require('request');
 
 const api = asyncify(express.Router())
-//const tokenClient = process.env.TOKEN_SLACK_CLIENT;
-const tokenClient = "xoxp-523503548023-521845738785-522504373828-95e884ccbf2d5c9523ea735d91255eea";
+const tokenClient = process.env.TOKEN_SLACK_CLIENT;
+const tokenBot = process.env.TOKEN_SLACK_BOT;
 
-//const tokenBot = process.env.TOKEN_SLACK_BOT;
-const tokenBot = "xoxb-523503548023-522302167060-urxnLEMUaywfEnQrFt6NKVVo";
 api.get('/', (req, res, next) => {
   debug(`Request successful, ${chalk.green('Endpoint Worked!')}`)
   res.send('Endpoint Worked!')
